@@ -41,9 +41,10 @@ const Login = () => {
         const userInfo = { ...docSnap.data(), uid };
 
         localStorage.setItem("Current_User", JSON.stringify(userInfo));
+        setEmail("");
+        setPassword("");
         navigate("/");
       }
-
       setIsLoading(false);
 
       toast.success("LoggedIn Successfully!", {
@@ -59,6 +60,8 @@ const Login = () => {
       });
     } catch (error) {
       console.warn("Signup Error -->", error.message);
+      setEmail("");
+      setPassword("");
       setIsLoading(false);
       toast.error(error.message, {
         position: "top-right",
@@ -112,6 +115,7 @@ const Login = () => {
 
         <Stack gap={"15px"} marginTop={"20px"}>
           <TextField
+            value={email}
             onChange={handleEmailValue}
             size="small"
             label="Email"
@@ -119,6 +123,7 @@ const Login = () => {
             fullWidth
           />
           <TextField
+            value={password}
             onChange={handlePassValue}
             size="small"
             label="Password"

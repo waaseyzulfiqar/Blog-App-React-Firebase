@@ -13,20 +13,23 @@ import NotFoundError from "../screen/NotFoundError";
 import SingleBlog from "../screen/SingleBlog";
 import { useEffect, useState } from "react";
 import { auth, onAuthStateChanged } from "./firebase";
+import { Box, CircularProgress } from "@mui/material";
 
 const Main = () => {
   const [users, setUser] = useState();
-
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  
   useEffect(() => {
-    const currentLoggedInUser = JSON.parse(localStorage.getItem("Current_User"));
+    const currentLoggedInUser = JSON.parse(
+      localStorage.getItem("Current_User")
+    );
     onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setIsLoading(false); // done checking auth
 
-      if (users || currentLoggedInUser) {
+      if (user && currentLoggedInUser) {
         if (location.pathname === "/login" || location.pathname === "/signup") {
           navigate("/");
         }
@@ -36,7 +39,24 @@ const Main = () => {
         }
       }
     });
-  }, [location.pathname, navigate]);
+  }, [location.pathname, users]);
+
+  if (isLoading)
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          background:
+            "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
+        }}
+      >
+        <CircularProgress size="50px" />
+      </Box>
+    );
+
   return <Outlet />;
 };
 

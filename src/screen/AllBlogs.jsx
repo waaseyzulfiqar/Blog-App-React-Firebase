@@ -26,9 +26,11 @@ const AllBlogs = () => {
 
       const querySnapshot = await getDocs(q);
 
+      const blogsArray = [];
       querySnapshot.forEach((doc) => {
-        setBlogs((prev) => [...prev, { id: doc.id, ...doc.data() }]);
+        blogsArray.push({ id: doc.id, ...doc.data() });
       });
+      setBlogs(blogsArray);
       setIsLoading(false);
     } catch (error) {
       console.warn("All Blogs Fetching Error -->", error.message);
@@ -100,18 +102,7 @@ const AllBlogs = () => {
                   >
                     {blog.title}
                   </Typography>
-                  <Typography
-                    mb={"10px"}
-                    display={"inline-block"}
-                    bgcolor={"rgb(104, 81, 255)"}
-                    component={"span"}
-                    color="white"
-                    p={"5px"}
-                    fontSize={"12px"}
-                    borderRadius={"5px"}
-                  >
-                    {blog.subject}
-                  </Typography>
+
                   <Typography
                     variant="body2"
                     sx={{
@@ -125,13 +116,30 @@ const AllBlogs = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
-                    size="small"
-                    sx={{ color: "rgb(104, 81, 255)" }}
+                  <Stack
+                    flexDirection={"row"}
+                    justifyContent={"space-between"}
+                    width={"100%"}
                   >
-                    Learn More
-                  </Button>
+                    <Button
+                      onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
+                      size="small"
+                      sx={{ color: "rgb(104, 81, 255)", fontSize: "0.8rem" }}
+                    >
+                      Learn More
+                    </Button>
+                    <Typography
+                      display={"inline-block"}
+                      bgcolor={"rgb(104, 81, 255)"}
+                      component={"span"}
+                      color="white"
+                      p={"5px 10px"}
+                      fontSize={"12px"}
+                      borderRadius={"5px"}
+                    >
+                      {blog.subject}
+                    </Typography>
+                  </Stack>
                 </CardActions>
               </Card>
             ))}

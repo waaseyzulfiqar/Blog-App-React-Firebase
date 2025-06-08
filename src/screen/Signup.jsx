@@ -54,6 +54,10 @@ const Signup = () => {
         password
       );
       setIsLoading(false);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
       toast.success("Account Created Successfully!", {
         position: "top-right",
         autoClose: 4000,
@@ -71,6 +75,10 @@ const Signup = () => {
       navigate("/login");
     } catch (error) {
       console.warn("Signup Error -->", error.message);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
       setIsLoading(false);
       toast.error(error.message, {
         position: "top-right",
@@ -124,6 +132,7 @@ const Signup = () => {
 
         <Stack gap={"15px"} marginTop={"20px"}>
           <TextField
+            value={firstName}
             onChange={handleFNValue}
             size="small"
             label="First Name"
@@ -131,18 +140,21 @@ const Signup = () => {
             fullWidth
           />
           <TextField
+            value={lastName}
             onChange={handleLNValue}
             size="small"
             label="Last Name"
             type="text"
           />
           <TextField
+            value={email}
             onChange={handleEmailValue}
             size="small"
             label="Email"
             type="email"
           />
           <TextField
+            value={password}
             onChange={handlePassValue}
             size="small"
             label="Password"

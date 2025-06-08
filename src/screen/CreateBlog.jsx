@@ -56,6 +56,9 @@ const CreateBlog = () => {
     try {
       setIsLoading(true);
       await addDoc(collection(db, "Blogs"), newDataObj);
+      setTitle("");
+      setSubject("");
+      setDescription("");
       setIsLoading(false);
       toast.success("Blog Created Succefully!", {
         position: "top-right",
@@ -70,6 +73,9 @@ const CreateBlog = () => {
       });
     } catch (error) {
       console.warn("Blog Creation Error -->", error.message);
+      setTitle("");
+      setSubject("");
+      setDescription("");
       setIsLoading(false);
       toast.error(error.message, {
         position: "top-right",
@@ -119,6 +125,7 @@ const CreateBlog = () => {
 
         <Stack gap={"15px"} marginTop={"20px"}>
           <TextField
+            value={title}
             onChange={handleTitleValue}
             size="small"
             label="Title"
@@ -126,6 +133,7 @@ const CreateBlog = () => {
             fullWidth
           />
           <TextField
+            value={subject}
             onChange={handleSubjectValue}
             size="small"
             label="Category"
@@ -134,6 +142,7 @@ const CreateBlog = () => {
           />
 
           <TextField
+            value={description}
             onChange={handleDescriptionValue}
             label="Description"
             multiline
