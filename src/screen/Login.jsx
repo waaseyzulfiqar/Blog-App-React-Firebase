@@ -1,4 +1,11 @@
-import { Box, Button, CircularProgress, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import "../App.css";
@@ -78,7 +85,8 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        background: "linear-gradient(0deg, #F4F1FF 50%, #EDEAFF 100%)",
+        background:
+          "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
     >
       <Stack
@@ -129,7 +137,9 @@ const Login = () => {
             fullWidth
             disabled={isLoading}
           >
-            {isLoading && <CircularProgress size="20px" color="white" sx={{mr: '10px'}}/>}
+            {isLoading && (
+              <CircularProgress size="20px" color="white" sx={{ mr: "10px" }} />
+            )}
             Login
           </Button>
         </Stack>

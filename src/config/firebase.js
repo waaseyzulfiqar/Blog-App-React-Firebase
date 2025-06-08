@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {
   doc,
   getFirestore,
@@ -37,4 +37,6 @@ export {
   query,
   where,
   getDocs,
+  onAuthStateChanged,
+  signOut
 };

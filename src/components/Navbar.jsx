@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth, signOut } from "../config/firebase";
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -27,7 +28,7 @@ function Navbar() {
     if (currentUser) {
       setPages([...pages, "Create Blog", "Logout"]);
     } else {
-      setPages([...pages, "Login", "Sign Up"]);
+      setPages([...pages, "Login", "Sign Up", "Create Blog"]);
     }
   }, []);
 
@@ -46,7 +47,7 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const handleMenuItemClick = (page) => {
+  const handleMenuItemClick = async (page) => {
     switch (page) {
       case "Sign Up":
         navigate("/signup");
@@ -58,6 +59,12 @@ function Navbar() {
         navigate("/create-blog");
         break;
       case "Logout":
+        try {
+          await signOut(auth);
+          console.log("logged out");
+        } catch (error) {
+          console.error("Sign out error:", error);
+        }
         localStorage.removeItem("Current_User");
         setPages((prev) => {
           prev.length = 0;

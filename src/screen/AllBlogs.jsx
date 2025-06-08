@@ -59,7 +59,8 @@ const AllBlogs = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(0deg, #F4F1FF 50%, #EDEAFF 100%)",
+        background:
+          "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
     >
       <Navbar />

@@ -97,7 +97,8 @@ const Signup = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        background: "linear-gradient(0deg, #F4F1FF 50%, #EDEAFF 100%)",
+        background:
+          "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
     >
       <Stack
@@ -157,7 +158,9 @@ const Signup = () => {
             variant="contained"
             disabled={isLoading}
           >
-            {isLoading && <CircularProgress size="20px" color="white" sx={{mr: '10px'}}/>}
+            {isLoading && (
+              <CircularProgress size="20px" color="white" sx={{ mr: "10px" }} />
+            )}
             Create Account
           </Button>
         </Stack>
