@@ -12,10 +12,12 @@ import {
 import Navbar from "../components/Navbar";
 import { query, collection, where, getDocs, db } from "../config/firebase";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const getAllPublicBlogs = async () => {
     try {
@@ -25,13 +27,29 @@ const AllBlogs = () => {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        setBlogs((prev) => [...prev, doc.data()]);
+        setBlogs((prev) => [...prev, { id: doc.id, ...doc.data() }]);
       });
       setIsLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      console.warn("All Blogs Fetching Error -->", error.message);
+      setIsLoading(false);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
   };
 
-  console.log("blogs", blogs);
+  const hanldeRedirectToSingleBlogPage = (id) => {
+    navigate(`/blog/${id}`);
+  };
 
   useEffect(() => {
     getAllPublicBlogs();
@@ -66,10 +84,19 @@ const AllBlogs = () => {
           </Box>
         ) : (
           <>
-            {blogs.map((blog) => (
-              <Card key={blog.userId} sx={{ width: 400, minHeight: 200 }}>
+            {blogs.map((blog, index) => (
+              <Card key={index} sx={{ width: 400, minHeight: 150 }}>
                 <CardContent>
-                  <Typography gutterBottom variant="h6" fontWeight={"600"}>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    fontWeight={"600"}
+                    sx={{
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                    }}
+                  >
                     {blog.title}
                   </Typography>
                   <Typography
@@ -97,7 +124,11 @@ const AllBlogs = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" sx={{ color: "rgb(104, 81, 255)" }}>
+                  <Button
+                    onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
+                    size="small"
+                    sx={{ color: "rgb(104, 81, 255)" }}
+                  >
                     Learn More
                   </Button>
                 </CardActions>
