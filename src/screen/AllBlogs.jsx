@@ -88,7 +88,21 @@ const AllBlogs = () => {
         ) : (
           <>
             {blogs.map((blog, index) => (
-              <Card key={index} sx={{ width: 400, minHeight: 150 }}>
+              <Card
+                key={index}
+                sx={{
+                  width: {
+                    xs: "95%",
+                    sm: "46%",
+                  },
+                  minHeight: 200,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  boxShadow:
+                    "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+                }}
+              >
                 <CardContent>
                   <Typography
                     gutterBottom
@@ -107,8 +121,9 @@ const AllBlogs = () => {
                     variant="body2"
                     sx={{
                       color: "text.secondary",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3, // Change to 2 if you want 2 lines
+                      WebkitBoxOrient: "vertical",
                       overflow: "hidden",
                     }}
                   >
