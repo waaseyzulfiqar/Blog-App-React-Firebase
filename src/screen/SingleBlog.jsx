@@ -43,6 +43,10 @@ const SingleBlog = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     getSingleBlog();
   }, []);
@@ -62,46 +66,48 @@ const SingleBlog = () => {
       {isLoading ? (
         <CircularProgress size="40px" />
       ) : (
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={4}
-          alignItems={{
-            xs: "flex-start",
-            sm: "center",
-            md: "flex-start",
-          }}
-          justifyContent="center"
-        >
-          <Box sx={{ alignSelf: "flex-start", mb: 2 }}>
+        <Stack>
+          <Box>
             <Button
               startIcon={<ArrowBackIcon />}
-              // onClick={handleGoBack}
+              onClick={handleGoBack}
               sx={{ textTransform: "none" }}
             >
               Go Back
             </Button>
           </Box>
-          <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
-            <Typography
-              sx={{
-                fontSize: {
-                  xs: "1.8rem",
-                  sm: "2.2rem",
-                  md: "2.8rem",
-                },
-              }}
-              fontWeight={600}
-              mb={2}
-            >
-              {data.title}
-            </Typography>
-          </Box>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={4}
+            alignItems={{
+              xs: "flex-start",
+              sm: "center",
+              md: "flex-start",
+            }}
+            justifyContent="center"
+          >
+            <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: "1.8rem",
+                    sm: "2.2rem",
+                    md: "2.8rem",
+                  },
+                }}
+                fontWeight={600}
+                mb={2}
+              >
+                {data.title}
+              </Typography>
+            </Box>
 
-          <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
-            <Typography variant="body1" lineHeight={1.6}>
-              {data.description}
-            </Typography>
-          </Box>
+            <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
+              <Typography variant="body1" lineHeight={1.6}>
+                {data.description}
+              </Typography>
+            </Box>
+          </Stack>
         </Stack>
       )}
     </Box>
