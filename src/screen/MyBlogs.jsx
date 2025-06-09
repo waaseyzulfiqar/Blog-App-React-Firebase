@@ -119,7 +119,7 @@ const MyBlogs = () => {
           "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
     >
-      <Box sx={{ alignSelf: "flex-start", py: 2, ml: 6 }}>
+      <Box sx={{ alignSelf: "flex-start", py: 2, ml: {md: 6, sm: 4, xs: 2} }}>
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={handleGoBack}

@@ -1,7 +1,14 @@
 import { useParams } from "react-router-dom";
 import { db, doc, getDoc } from "../config/firebase";
 import { useEffect, useState } from "react";
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SingleBlog = () => {
   const params = useParams();
@@ -65,6 +72,15 @@ const SingleBlog = () => {
           }}
           justifyContent="center"
         >
+          <Box sx={{ alignSelf: "flex-start", mb: 2 }}>
+            <Button
+              startIcon={<ArrowBackIcon />}
+              // onClick={handleGoBack}
+              sx={{ textTransform: "none" }}
+            >
+              Go Back
+            </Button>
+          </Box>
           <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
             <Typography
               sx={{
@@ -72,7 +88,7 @@ const SingleBlog = () => {
                   xs: "1.8rem",
                   sm: "2.2rem",
                   md: "2.8rem",
-                }
+                },
               }}
               fontWeight={600}
               mb={2}
