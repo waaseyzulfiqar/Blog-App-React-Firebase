@@ -64,13 +64,14 @@ function Navbar() {
       case "Logout":
         try {
           await signOut(auth);
+          navigate("/");
         } catch (error) {
           console.error("Sign out error:", error);
         }
         localStorage.removeItem("Current_User");
         setPages((prev) => {
           prev.length = 0;
-          return [...pages, "Create Blog", "Login", "Sign Up"];
+          return [...pages, "My Blogs", "Create Blog", "Login", "Sign Up"];
         });
         break;
       default:
