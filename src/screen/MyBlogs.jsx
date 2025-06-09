@@ -21,6 +21,7 @@ import {
 } from "../config/firebase";
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const MyBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -33,7 +34,7 @@ const MyBlogs = () => {
     );
 
     if (!currentLoggedInUser) return;
-    
+
     try {
       setIsLoading(true);
       const q = query(
@@ -102,6 +103,10 @@ const MyBlogs = () => {
     navigate(`/blog/${id}`);
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     getAllBlogs();
   }, []);
@@ -114,6 +119,15 @@ const MyBlogs = () => {
           "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
     >
+      <Box sx={{ alignSelf: "flex-start", py: 2, ml: 6 }}>
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={handleGoBack}
+          sx={{ textTransform: "none" }}
+        >
+          Go Back
+        </Button>
+      </Box>
       <Typography
         sx={{
           fontSize: {
@@ -121,11 +135,13 @@ const MyBlogs = () => {
             sm: "2.2rem",
             md: "2.8rem",
           },
+          background: "linear-gradient(106.43deg, #522fd4, #6bdcff 95.12%)",
+          WebkitTextFillColor: "transparent",
+          WebkitBackgroundClip: "text",
         }}
         display={"flex"}
         justifyContent={"center"}
         pt={"10px"}
-        color="rgb(104, 81, 255)"
         fontWeight={"600"}
       >
         My Blogs

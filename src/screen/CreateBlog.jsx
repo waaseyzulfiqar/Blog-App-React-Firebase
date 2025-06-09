@@ -90,7 +90,7 @@ const CreateBlog = () => {
       });
     }
   };
-
+  
   return (
     <Box
       sx={{
@@ -149,16 +149,20 @@ const CreateBlog = () => {
             rows={4}
             fullWidth
           />
-          <FormControlLabel
-            control={
-              <Switch
-                checked={isPublic}
-                onChange={handleToggleChange}
-                name="visibility"
-              />
-            }
-            label={isPublic ? "Public" : "Private"}
-          />
+          <Stack direction="row" alignItems="center">
+            {/* <Typography variant="body1">Visibility:</Typography> */}
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isPublic}
+                  onChange={handleToggleChange}
+                  name="visibility"
+                />
+              }
+              label={isPublic ? "Public" : "Private"}
+            />
+          </Stack>
 
           <Button
             onClick={handleNewBlogData}
