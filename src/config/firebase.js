@@ -10,6 +10,7 @@ import {
   query,
   where,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -38,5 +39,6 @@ export {
   where,
   getDocs,
   onAuthStateChanged,
-  signOut
+  signOut,
+  deleteDoc,
 };

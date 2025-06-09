@@ -65,13 +65,23 @@ const SingleBlog = () => {
           }}
           justifyContent="center"
         >
-          <Box width={{ xs: "95%", sm: "70%", md: "45%" }}>
-            <Typography variant="h3" fontWeight={600} mb={2}>
+          <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "1.8rem",
+                  sm: "2.2rem",
+                  md: "2.8rem",
+                }
+              }}
+              fontWeight={600}
+              mb={2}
+            >
               {data.title}
             </Typography>
           </Box>
 
-          <Box width={{ xs: "95%", sm: "70%", md: "45%" }}>
+          <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
             <Typography variant="body1" lineHeight={1.6}>
               {data.description}
             </Typography>

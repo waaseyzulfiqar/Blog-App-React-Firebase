@@ -14,6 +14,7 @@ import SingleBlog from "../screen/SingleBlog";
 import { useEffect, useState } from "react";
 import { auth, onAuthStateChanged } from "./firebase";
 import { Box, CircularProgress } from "@mui/material";
+import MyBlogs from "../screen/MyBlogs";
 
 const Main = () => {
   const [users, setUser] = useState();
@@ -27,14 +28,14 @@ const Main = () => {
     );
     onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setIsLoading(false); // done checking auth
+      setIsLoading(false);
 
       if (user && currentLoggedInUser) {
         if (location.pathname === "/login" || location.pathname === "/signup") {
           navigate("/");
         }
       } else {
-        if (location.pathname === "/create-blog") {
+        if (location.pathname === "/create-blog" || location.pathname === "/my-blogs") {
           navigate("/login");
         }
       }
@@ -69,6 +70,7 @@ const Router = () => {
         <Route path="/create-blog" element={<CreateBlog />} />
         <Route path="/login" element={<Login />} />
         <Route path="/blog/:id" element={<SingleBlog />} />
+        <Route path="/my-blogs" element={<MyBlogs />} />
         <Route path="*" element={<NotFoundError />} />
       </Route>
     </Routes>

@@ -26,9 +26,9 @@ function Navbar() {
   useEffect(() => {
     const currentUser = localStorage.getItem("Current_User");
     if (currentUser) {
-      setPages([...pages, "Create Blog", "Logout"]);
+      setPages([...pages, "Create Blog", "Logout", "My Blogs"]);
     } else {
-      setPages([...pages, "Login", "Sign Up", "Create Blog"]);
+      setPages([...pages, "Login", "Sign Up", "Create Blog", "My Blogs"]);
     }
   }, []);
 
@@ -58,10 +58,12 @@ function Navbar() {
       case "Create Blog":
         navigate("/create-blog");
         break;
+      case "My Blogs":
+        navigate("/my-blogs");
+        break;
       case "Logout":
         try {
           await signOut(auth);
-          console.log("logged out");
         } catch (error) {
           console.error("Sign out error:", error);
         }
