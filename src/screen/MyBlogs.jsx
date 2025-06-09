@@ -5,7 +5,9 @@ import {
   CardActions,
   CardContent,
   CircularProgress,
+  IconButton,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -22,6 +24,7 @@ import {
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const MyBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -119,7 +122,7 @@ const MyBlogs = () => {
           "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
     >
-      <Box sx={{ alignSelf: "flex-start", py: 2, ml: {md: 6, sm: 4, xs: 2} }}>
+      <Box sx={{ alignSelf: "flex-start", py: 2, ml: { md: 6, sm: 4, xs: 2 } }}>
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={handleGoBack}
@@ -229,21 +232,37 @@ const MyBlogs = () => {
                     alignItems={"center"}
                     width={"100%"}
                   >
-                    <Button
-                      onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
-                      size="small"
-                      sx={{ color: "rgb(104, 81, 255)", fontSize: "0.8rem" }}
-                    >
-                      Learn More
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={() => deleteBlog(blog.id)}
-                    >
-                      <DeleteOutlineOutlined />
-                    </Button>
+                    <Box>
+                      <Button
+                        onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
+                        size="small"
+                        sx={{ color: "rgb(104, 81, 255)", fontSize: "0.8rem" }}
+                      >
+                        Learn More
+                      </Button>
+                    </Box>
+                    <Stack flexDirection={"row"} alignItems={"center"} gap={3}>
+                      {!blog.isPublic && (
+                        <Tooltip placement="top" title="Private">
+                          <IconButton>
+                            <VisibilityOffIcon
+                              sx={{
+                                color: "rgb(104, 81, 255)",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => deleteBlog(blog.id)}
+                      >
+                        <DeleteOutlineOutlined />
+                      </Button>
+                    </Stack>
                   </Stack>
                 </CardActions>
               </Card>

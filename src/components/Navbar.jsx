@@ -26,9 +26,9 @@ function Navbar() {
   useEffect(() => {
     const currentUser = localStorage.getItem("Current_User");
     if (currentUser) {
-      setPages([...pages, "Create Blog", "Logout", "My Blogs"]);
+      setPages([...pages, "Create Blog", "My Blogs", "Logout"]);
     } else {
-      setPages([...pages, "Login", "Sign Up", "Create Blog", "My Blogs"]);
+      setPages([...pages, "Create Blog", "My Blogs", "Login", "Sign Up"]);
     }
   }, []);
 
