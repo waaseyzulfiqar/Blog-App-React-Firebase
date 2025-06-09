@@ -19,11 +19,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleEmailValue = (e) => {
-    if (!e.target.value) return;
     setEmail(e.target.value);
   };
   const handlePassValue = (e) => {
-    if (!e.target.value) return;
     setPassword(e.target.value);
   };
 

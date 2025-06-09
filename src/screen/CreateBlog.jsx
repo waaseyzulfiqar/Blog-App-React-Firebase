@@ -24,15 +24,12 @@ const CreateBlog = () => {
   };
 
   const handleTitleValue = (e) => {
-    if (!e.target.value) return;
     setTitle(e.target.value);
   };
   const handleSubjectValue = (e) => {
-    if (!e.target.value) return;
     setSubject(e.target.value);
   };
   const handleDescriptionValue = (e) => {
-    if (!e.target.value) return;
     setDescription(e.target.value);
   };
 
@@ -90,7 +87,7 @@ const CreateBlog = () => {
       });
     }
   };
-  
+
   return (
     <Box
       sx={{

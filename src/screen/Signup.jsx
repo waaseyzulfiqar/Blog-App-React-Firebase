@@ -21,19 +21,15 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleEmailValue = (e) => {
-    if (!e.target.value) return;
     setEmail(e.target.value);
   };
   const handlePassValue = (e) => {
-    if (!e.target.value) return;
     setPassword(e.target.value);
   };
   const handleFNValue = (e) => {
-    if (!e.target.value) return;
     setFirstName(e.target.value);
   };
   const handleLNValue = (e) => {
-    if (!e.target.value) return;
     setLastName(e.target.value);
   };
 
