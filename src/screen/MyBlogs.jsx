@@ -4,6 +4,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  CardMedia,
   CircularProgress,
   IconButton,
   Stack,
@@ -185,6 +186,16 @@ const MyBlogs = () => {
                     "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
                 }}
               >
+                <CardMedia
+                  sx={{
+                    height: 200,
+                    width: 220,
+                    mx: "auto",
+                    objectFit: "cover",
+                  }}
+                  image={blog.url}
+                  title={blog.title}
+                />
                 <CardContent>
                   <Typography
                     gutterBottom

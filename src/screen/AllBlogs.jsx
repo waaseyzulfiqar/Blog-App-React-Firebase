@@ -85,7 +85,7 @@ const AllBlogs = () => {
           >
             <CircularProgress size="50px" />
           </Box>
-        ) : (
+        ) : blogs.length > 0 ? (
           <>
             {blogs.map((blog, index) => (
               <Card
@@ -103,6 +103,16 @@ const AllBlogs = () => {
                     "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
                 }}
               >
+                <CardMedia
+                  sx={{
+                    height: 200,
+                    width: 220,
+                    mx: "auto",
+                    objectFit: "cover",
+                  }}
+                  image={blog.url}
+                  title={blog.title}
+                />
                 <CardContent>
                   <Typography
                     gutterBottom
@@ -159,6 +169,19 @@ const AllBlogs = () => {
               </Card>
             ))}
           </>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "80vh",
+            }}
+          >
+            <Typography variant="h4" color="rgb(104, 81, 255)">
+              No Blogs yet...
+            </Typography>
+          </Box>
         )}
       </Stack>
     </Box>

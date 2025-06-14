@@ -11,13 +11,17 @@ import {
 import { useState } from "react";
 import { addDoc, collection, db } from "../config/firebase";
 import { Bounce, toast } from "react-toastify";
+import axios from "axios";
 
 const CreateBlog = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [blogImageUrl, setBlogImageUrl] = useState("");
+  const CLOUD_NAME = "dlwhx3dtg";
 
   const handleToggleChange = (e) => {
     setIsPublic(e.target.checked);
@@ -31,6 +35,27 @@ const CreateBlog = () => {
   };
   const handleDescriptionValue = (e) => {
     setDescription(e.target.value);
+  };
+  const handleFileUpload = async (e) => {
+    if (!e.target.files) return;
+    let file = e.target.files[0];
+    setImageFile(file);
+    try {
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "blog-image");
+        const res = await axios.post(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+          formData
+        );
+        setBlogImageUrl(res.data.secure_url);
+      }
+      setImageFile(null);
+    } catch (error) {
+      setImageFile(null);
+      console.log("Image upload error", error.message);
+    }
   };
 
   const handleNewBlogData = async () => {
@@ -46,6 +71,7 @@ const CreateBlog = () => {
         subject,
         description,
         isPublic,
+        blogImageUrl,
         userId: currentLoggedInUser.uid,
       };
     }
@@ -137,7 +163,6 @@ const CreateBlog = () => {
             type="text"
             fullWidth
           />
-
           <TextField
             value={description}
             onChange={handleDescriptionValue}
@@ -146,21 +171,17 @@ const CreateBlog = () => {
             rows={4}
             fullWidth
           />
-          <Stack direction="row" alignItems="center">
-            {/* <Typography variant="body1">Visibility:</Typography> */}
-
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isPublic}
-                  onChange={handleToggleChange}
-                  name="visibility"
-                />
-              }
-              label={isPublic ? "Public" : "Private"}
-            />
-          </Stack>
-
+          <TextField type="file" onChange={handleFileUpload} fullWidth />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isPublic}
+                onChange={handleToggleChange}
+                name="visibility"
+              />
+            }
+            label={isPublic ? "Public" : "Private"}
+          />
           <Button
             onClick={handleNewBlogData}
             sx={{
@@ -170,7 +191,7 @@ const CreateBlog = () => {
             }}
             variant="contained"
             fullWidth
-            disabled={isLoading}
+            disabled={isLoading || !blogImageUrl}
           >
             {isLoading && (
               <CircularProgress size="20px" color="white" sx={{ mr: "10px" }} />

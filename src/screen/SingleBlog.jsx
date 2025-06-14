@@ -88,6 +88,10 @@ const SingleBlog = () => {
             justifyContent="center"
           >
             <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
+              <img src={data.url} alt={data.title} width="100%"/>
+            </Box>
+
+            <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
               <Typography
                 sx={{
                   fontSize: {
@@ -101,9 +105,6 @@ const SingleBlog = () => {
               >
                 {data.title}
               </Typography>
-            </Box>
-
-            <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
               <Typography variant="body1" lineHeight={1.6}>
                 {data.description}
               </Typography>
