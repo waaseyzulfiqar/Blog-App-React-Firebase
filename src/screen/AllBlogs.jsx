@@ -93,7 +93,8 @@ const AllBlogs = () => {
                 sx={{
                   width: {
                     xs: "95%",
-                    sm: "46%",
+                    sm: "45%",
+                    md: '30%'
                   },
                   minHeight: 200,
                   display: "flex",
@@ -105,10 +106,7 @@ const AllBlogs = () => {
               >
                 <CardMedia
                   sx={{
-                    height: 200,
-                    width: 220,
-                    mx: "auto",
-                    objectFit: "cover",
+                    height: 180,
                   }}
                   image={blog.url}
                   title={blog.title}

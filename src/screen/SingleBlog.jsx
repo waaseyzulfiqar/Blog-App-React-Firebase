@@ -54,6 +54,7 @@ const SingleBlog = () => {
 
   return (
     <Box
+    position={'relative'}
       sx={{
         minHeight: "100vh",
         background:
@@ -68,7 +69,7 @@ const SingleBlog = () => {
         <CircularProgress size="40px" />
       ) : (
         <Stack>
-          <Box>
+          <Box position={'absolute'} top={20} left={50}>
             <Button
               startIcon={<ArrowBackIcon />}
               onClick={handleGoBack}
@@ -88,7 +89,7 @@ const SingleBlog = () => {
             justifyContent="center"
           >
             <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
-              <img src={data.url} alt={data.title} width="100%"/>
+              <Box component={"img"} src={data.url} alt={data.title} width="90%"/>
             </Box>
 
             <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
