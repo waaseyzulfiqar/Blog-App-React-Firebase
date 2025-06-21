@@ -226,7 +226,7 @@ const MyBlogs = () => {
                     sx={{
                       color: "text.secondary",
                       display: "-webkit-box",
-                      WebkitLineClamp: 3, // Change to 2 if you want 2 lines
+                      WebkitLineClamp: 3,
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden",
                     }}

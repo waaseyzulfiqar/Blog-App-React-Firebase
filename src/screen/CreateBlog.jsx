@@ -8,10 +8,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { addDoc, collection, db } from "../config/firebase";
 import { Bounce, toast } from "react-toastify";
 import axios from "axios";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const CreateBlog = () => {
   const [isPublic, setIsPublic] = useState(false);
@@ -21,6 +22,7 @@ const CreateBlog = () => {
   const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [blogImageUrl, setBlogImageUrl] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const CLOUD_NAME = "dlwhx3dtg";
 
   const handleToggleChange = (e) => {
@@ -36,11 +38,15 @@ const CreateBlog = () => {
   const handleDescriptionValue = (e) => {
     setDescription(e.target.value);
   };
+
+  const inputFileRef = useRef();
+
   const handleFileUpload = async (e) => {
     if (!e.target.files) return;
     let file = e.target.files[0];
     setImageFile(file);
     try {
+      setIsUploading(true);
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
@@ -49,9 +55,9 @@ const CreateBlog = () => {
           `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
           formData
         );
+        setIsUploading(false);
         setBlogImageUrl(res.data.secure_url);
       }
-      setImageFile(null);
     } catch (error) {
       setImageFile(null);
       console.log("Image upload error", error.message);
@@ -59,6 +65,19 @@ const CreateBlog = () => {
   };
 
   const handleNewBlogData = async () => {
+    if (!title || !subject || !description || !blogImageUrl)
+      return toast.error("Please fill all the fields..", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
     const currentLoggedInUser = JSON.parse(
       localStorage.getItem("Current_User")
     );
@@ -114,13 +133,17 @@ const CreateBlog = () => {
     }
   };
 
+  const handleSelectImageClick = () => {
+    inputFileRef.current.click();
+  };
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "100vh",
         background:
           "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
@@ -171,7 +194,54 @@ const CreateBlog = () => {
             rows={4}
             fullWidth
           />
-          <TextField type="file" onChange={handleFileUpload} fullWidth />
+          <Stack
+            onClick={handleSelectImageClick}
+            border={"2px dashed rgb(104, 81, 255)"}
+            borderRadius={"12px"}
+            alignItems={"center"}
+            gap={2}
+            py={2}
+            bgcolor={"rgba(104, 81, 255, 0.05)"}
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "rgba(104, 81, 255, 0.1)",
+              },
+            }}
+          >
+            {isUploading ? (
+              <CircularProgress size="30px" />
+            ) : (
+              <CloudUploadIcon
+                sx={{ color: "rgb(104, 81, 255)" }}
+                fontSize="large"
+              />
+            )}
+            <Box>
+              <Typography component={"h6"} color="rgb(104, 81, 255)">
+                {isUploading
+                  ? "Preparing Image File for Upload"
+                  : "Upload Image"}
+              </Typography>
+            </Box>
+            {!isUploading && (
+              <Button
+                variant="contained"
+                sx={{ bgcolor: "rgb(104, 81, 255)" }}
+                size="small"
+              >
+                <CloudUploadIcon sx={{ color: "white", mr: "7px" }} />
+                Select Image
+              </Button>
+            )}
+          </Stack>
+          <input
+            type="file"
+            ref={inputFileRef}
+            style={{ display: "none" }}
+            onChange={handleFileUpload}
+          />
+
           <FormControlLabel
             control={
               <Switch
@@ -191,7 +261,6 @@ const CreateBlog = () => {
             }}
             variant="contained"
             fullWidth
-            disabled={isLoading || !blogImageUrl}
           >
             {isLoading && (
               <CircularProgress size="20px" color="white" sx={{ mr: "10px" }} />
