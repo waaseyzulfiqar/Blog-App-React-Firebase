@@ -21,16 +21,22 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [pages, setPages] = useState([]);
+  const [currUser, setCurrUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    checkCurrentUser();
+  }, [currUser]);
+
+  const checkCurrentUser = () => {
     const currentUser = localStorage.getItem("Current_User");
     if (currentUser) {
-      setPages([...pages, "Create Blog", "My Blogs", "Logout"]);
+      setCurrUser(currentUser);
+      setPages(["Create Blog", "My Blogs", "Logout"]);
     } else {
-      setPages([...pages, "Create Blog", "My Blogs", "Login", "Sign Up"]);
+      setPages(["Create Blog", "My Blogs", "Login", "Sign Up"]);
     }
-  }, []);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -95,7 +101,7 @@ function Navbar() {
               letterSpacing: ".2rem",
               color: "inherit",
               textDecoration: "none",
-              cursor: 'pointer'
+              cursor: "pointer",
             }}
           >
             Blogini
@@ -143,7 +149,7 @@ function Navbar() {
               letterSpacing: ".2rem",
               color: "inherit",
               textDecoration: "none",
-              cursor: 'pointer'
+              cursor: "pointer",
             }}
           >
             Blogini

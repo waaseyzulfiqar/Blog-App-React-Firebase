@@ -57,6 +57,17 @@ const CreateBlog = () => {
         );
         setIsUploading(false);
         setBlogImageUrl(res.data.secure_url);
+        toast.success("Image Uploaded Successfully!", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     } catch (error) {
       setImageFile(null);
@@ -90,7 +101,7 @@ const CreateBlog = () => {
         subject,
         description,
         isPublic,
-        blogImageUrl,
+        url: blogImageUrl,
         userId: currentLoggedInUser.uid,
       };
     }
@@ -144,6 +155,7 @@ const CreateBlog = () => {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
+        padding: "35px 0",
         background:
           "linear-gradient(to bottom,#ffffff 0%, #F4F1FF 50%, #EDEAFF 100%)",
       }}
@@ -261,6 +273,7 @@ const CreateBlog = () => {
             }}
             variant="contained"
             fullWidth
+            disabled={isLoading}
           >
             {isLoading && (
               <CircularProgress size="20px" color="white" sx={{ mr: "10px" }} />
