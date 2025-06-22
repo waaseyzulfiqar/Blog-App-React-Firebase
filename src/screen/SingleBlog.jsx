@@ -28,7 +28,7 @@ const SingleBlog = () => {
       }
       setIsLoading(false);
     } catch (error) {
-      console.warn("Single Blog Fetching Error -->", error.message);
+      console.warn("Single Blog Fetching Error", error.message);
       setIsLoading(false);
       toast.error(error.message, {
         position: "top-right",
@@ -69,7 +69,7 @@ const SingleBlog = () => {
         <CircularProgress size="40px" />
       ) : (
         <Stack>
-          <Box position={"absolute"} top={20} left={50}>
+          <Box position={"absolute"} top={20} left={20}>
             <Button
               startIcon={<ArrowBackIcon />}
               onClick={handleGoBack}
@@ -86,8 +86,9 @@ const SingleBlog = () => {
               sm: "center",
             }}
             justifyContent="center"
+            mt={"50px"}
           >
-            <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
+            <Box width={{ sm: "80%", md: "45%" }}>
               <Box
                 component={"img"}
                 src={data.url}
