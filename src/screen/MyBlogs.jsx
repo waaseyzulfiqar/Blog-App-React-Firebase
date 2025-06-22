@@ -150,159 +150,151 @@ const MyBlogs = () => {
       >
         My Blogs
       </Typography>
-      {blogs.length > 0 ? (
-        <Stack
-          flexDirection={"row"}
-          flexWrap={"wrap"}
-          justifyContent={"center"}
-          gap={"10px"}
-          padding={"30px 10px"}
-        >
-          {isLoading ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "80vh",
-              }}
-            >
-              <CircularProgress size="50px" />
-            </Box>
-          ) : (
-            <>
-              {blogs.map((blog, index) => (
-                <Card
-                  key={index}
+      <Stack
+        flexDirection={"row"}
+        flexWrap={"wrap"}
+        justifyContent={"center"}
+        gap={"20px 10px"}
+        padding={"30px 10px"}
+      >
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "80vh",
+            }}
+          >
+            <CircularProgress size="50px" />
+          </Box>
+        ) : blogs.length > 0 ? (
+          <>
+            {blogs.map((blog, index) => (
+              <Card
+                key={index}
+                sx={{
+                  width: {
+                    xs: "95%",
+                    sm: "45%",
+                    md: "30%",
+                  },
+                  minHeight: 200,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  boxShadow:
+                    "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+                }}
+              >
+                <CardMedia
                   sx={{
-                    width: {
-                      xs: "95%",
-                      sm: "45%",
-                      md: "30%",
-                    },
-                    minHeight: 200,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    boxShadow:
-                      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+                    height: 180,
                   }}
-                >
-                  <CardMedia
+                  image={blog.url}
+                  title={blog.title}
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    fontWeight={"600"}
                     sx={{
-                      height: 180,
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
                     }}
-                    image={blog.url}
-                    title={blog.title}
+                  >
+                    {blog.title}
+                  </Typography>
+
+                  <Typography
+                    display={"inline-block"}
+                    bgcolor={"rgb(104, 81, 255)"}
+                    component={"span"}
+                    color="white"
+                    p={"5px 10px"}
+                    fontSize={"12px"}
+                    borderRadius={"5px"}
+                    my={"10px"}
+                  >
+                    {blog.subject}
+                  </Typography>
+
+                  <Box
+                    sx={{
+                      color: "text.secondary",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      typography: "body2",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: blog.description }}
                   />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h6"
-                      fontWeight={"600"}
-                      sx={{
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                      }}
-                    >
-                      {blog.title}
-                    </Typography>
-
-                    <Typography
-                      display={"inline-block"}
-                      bgcolor={"rgb(104, 81, 255)"}
-                      component={"span"}
-                      color="white"
-                      p={"5px 10px"}
-                      fontSize={"12px"}
-                      borderRadius={"5px"}
-                      my={"10px"}
-                    >
-                      {blog.subject}
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.secondary",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
-                      {blog.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Stack
-                      flexDirection={"row"}
-                      justifyContent={"space-between"}
-                      alignItems={"center"}
-                      width={"100%"}
-                    >
-                      <Box>
-                        <Button
-                          onClick={() =>
-                            hanldeRedirectToSingleBlogPage(blog.id)
-                          }
-                          size="small"
-                          sx={{
-                            color: "rgb(104, 81, 255)",
-                            fontSize: "0.8rem",
-                          }}
-                        >
-                          Learn More
-                        </Button>
-                      </Box>
-                      <Stack
-                        flexDirection={"row"}
-                        alignItems={"center"}
-                        gap={3}
+                </CardContent>
+                <CardActions>
+                  <Stack
+                    flexDirection={"row"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    width={"100%"}
+                  >
+                    <Box>
+                      <Button
+                        onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
+                        size="small"
+                        sx={{
+                          color: "rgb(104, 81, 255)",
+                          fontSize: "0.8rem",
+                        }}
                       >
-                        {!blog.isPublic && (
-                          <Tooltip placement="top" title="Private">
-                            <IconButton>
-                              <VisibilityOffIcon
-                                sx={{
-                                  color: "rgb(104, 81, 255)",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        )}
-                        <Button
-                          variant="outlined"
-                          color="error"
-                          size="small"
-                          onClick={() => deleteBlog(blog.id)}
-                        >
-                          <DeleteOutlineOutlined />
-                        </Button>
-                      </Stack>
+                        Learn More
+                      </Button>
+                    </Box>
+                    <Stack flexDirection={"row"} alignItems={"center"} gap={3}>
+                      {!blog.isPublic && (
+                        <Tooltip placement="top" title="Private">
+                          <IconButton>
+                            <VisibilityOffIcon
+                              sx={{
+                                color: "rgb(104, 81, 255)",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => deleteBlog(blog.id)}
+                      >
+                        <DeleteOutlineOutlined />
+                      </Button>
                     </Stack>
-                  </CardActions>
-                </Card>
-              ))}
-            </>
-          )}
-        </Stack>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
-          }}
-        >
-          <Typography variant="h4" color="rgb(104, 81, 255)">
-            No Blogs yet...
-          </Typography>
-        </Box>
-      )}
+                  </Stack>
+                </CardActions>
+              </Card>
+            ))}
+          </>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "80vh",
+            }}
+          >
+            <Typography variant="h4" color="rgb(104, 81, 255)">
+              No Blogs yet...
+            </Typography>
+          </Box>
+        )}
+      </Stack>
     </Box>
   );
 };

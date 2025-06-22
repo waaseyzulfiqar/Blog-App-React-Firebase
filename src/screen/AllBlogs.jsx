@@ -71,7 +71,7 @@ const AllBlogs = () => {
         flexDirection={"row"}
         flexWrap={"wrap"}
         justifyContent={"center"}
-        gap={"10px"}
+        gap={"20px 10px"}
         padding={"30px 10px"}
       >
         {isLoading ? (
@@ -94,7 +94,7 @@ const AllBlogs = () => {
                   width: {
                     xs: "95%",
                     sm: "45%",
-                    md: '30%'
+                    md: "30%",
                   },
                   minHeight: 200,
                   display: "flex",
@@ -125,18 +125,18 @@ const AllBlogs = () => {
                     {blog.title}
                   </Typography>
 
-                  <Typography
-                    variant="body2"
+                  <Box
                     sx={{
                       color: "text.secondary",
                       display: "-webkit-box",
-                      WebkitLineClamp: 3, // Change to 2 if you want 2 lines
+                      WebkitLineClamp: 3,
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      typography: "body2", // MUI way to apply Typography style
                     }}
-                  >
-                    {blog.description}
-                  </Typography>
+                    dangerouslySetInnerHTML={{ __html: blog.description }}
+                  />
                 </CardContent>
                 <CardActions>
                   <Stack

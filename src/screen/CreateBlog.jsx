@@ -13,6 +13,8 @@ import { addDoc, collection, db } from "../config/firebase";
 import { Bounce, toast } from "react-toastify";
 import axios from "axios";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 const CreateBlog = () => {
   const [isPublic, setIsPublic] = useState(false);
@@ -24,6 +26,7 @@ const CreateBlog = () => {
   const [blogImageUrl, setBlogImageUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const CLOUD_NAME = "dlwhx3dtg";
+  const [editor, setEditor] = useState("");
 
   const handleToggleChange = (e) => {
     setIsPublic(e.target.checked);
@@ -35,8 +38,18 @@ const CreateBlog = () => {
   const handleSubjectValue = (e) => {
     setSubject(e.target.value);
   };
-  const handleDescriptionValue = (e) => {
-    setDescription(e.target.value);
+  const handleEditorChange = (value) => {
+    setDescription(value);
+  };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+      ["clean"],
+    ],
   };
 
   const inputFileRef = useRef();
@@ -169,6 +182,7 @@ const CreateBlog = () => {
             xs: "95%",
             sm: "65%",
             md: "42%",
+            lg: "35%",
           },
         }}
       >
@@ -198,14 +212,22 @@ const CreateBlog = () => {
             type="text"
             fullWidth
           />
-          <TextField
-            value={description}
-            onChange={handleDescriptionValue}
-            label="Description"
-            multiline
-            rows={4}
-            fullWidth
-          />
+          <Box
+            component="div"
+            sx={{
+              ".ql-container": {
+                height: "150px !important",
+              },
+            }}
+          >
+            <ReactQuill
+              placeholder="Description..."
+              theme="snow"
+              value={description}
+              onChange={handleEditorChange}
+              modules={modules}
+            />
+          </Box>
           <Stack
             onClick={handleSelectImageClick}
             border={"2px dashed rgb(104, 81, 255)"}

@@ -54,7 +54,7 @@ const SingleBlog = () => {
 
   return (
     <Box
-    position={'relative'}
+      position={"relative"}
       sx={{
         minHeight: "100vh",
         background:
@@ -69,7 +69,7 @@ const SingleBlog = () => {
         <CircularProgress size="40px" />
       ) : (
         <Stack>
-          <Box position={'absolute'} top={20} left={50}>
+          <Box position={"absolute"} top={20} left={50}>
             <Button
               startIcon={<ArrowBackIcon />}
               onClick={handleGoBack}
@@ -84,21 +84,25 @@ const SingleBlog = () => {
             alignItems={{
               xs: "flex-start",
               sm: "center",
-              md: "flex-start",
             }}
             justifyContent="center"
           >
             <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
-              <Box component={"img"} src={data.url} alt={data.title} width="90%"/>
+              <Box
+                component={"img"}
+                src={data.url}
+                alt={data.title}
+                width="90%"
+              />
             </Box>
 
             <Box width={{ xs: "95%", sm: "80%", md: "45%" }}>
               <Typography
                 sx={{
                   fontSize: {
-                    xs: "1.8rem",
-                    sm: "2.2rem",
-                    md: "2.8rem",
+                    xs: "1.6rem",
+                    sm: "1.8rem",
+                    md: "2rem",
                   },
                 }}
                 fontWeight={600}
@@ -106,9 +110,13 @@ const SingleBlog = () => {
               >
                 {data.title}
               </Typography>
-              <Typography variant="body1" lineHeight={1.6}>
-                {data.description}
-              </Typography>
+              <Box
+                sx={{
+                  typography: "body1",
+                  lineHeight: 1.3,
+                }}
+                dangerouslySetInnerHTML={{ __html: data.description }}
+              />
             </Box>
           </Stack>
         </Stack>
