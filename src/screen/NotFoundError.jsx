@@ -5,7 +5,23 @@ const NotFoundError = () => {
   const navigate = useNavigate();
 
   const redirectToHome = () => {
-    navigate("/");
+    try {
+      const currentUser = localStorage.getItem("Current_User");
+      if (currentUser) {
+        const parsedUser = JSON.parse(currentUser);
+        if (parsedUser?.type === "user") {
+          navigate("/");
+        } else {
+          navigate("/admin/dashboard");
+        }
+      } else {
+        // Handle case where no user data exists
+        navigate("/"); // or wherever you want to redirect unauthenticated users
+      }
+    } catch (error) {
+      console.error("Error parsing user data:", error);
+      navigate("/"); // fallback redirect
+    }
   };
 
   return (

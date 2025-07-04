@@ -41,8 +41,14 @@ const Login = () => {
         localStorage.setItem("Current_User", JSON.stringify(userInfo));
         setEmail("");
         setPassword("");
-        navigate("/");
+
+        if (userInfo.type === "admin") {
+          navigate("/admin/dashboard"); // Redirect to admin dashboard
+        } else {
+          navigate("/"); // Redirect to user homepage
+        }
       }
+
       setIsLoading(false);
 
       toast.success("LoggedIn Successfully!", {
