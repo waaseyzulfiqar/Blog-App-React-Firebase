@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Bounce, toast } from "react-toastify";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 const Blogs = () => {
   const [allBlogs, setAllBlogs] = useState([]);
