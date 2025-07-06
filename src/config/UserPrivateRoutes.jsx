@@ -1,15 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { Navigate, Outlet } from "react-router-dom";
 
 const UserPrivateRoutes = () => {
-  const [user, setUser] = useState(null);
+  const user = JSON.parse(localStorage.getItem("Current_User"));
 
-  useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("Current_User") || "null");
-    setUser(currentUser);
-  }, []);
+  if (!user?.uid) return <Navigate to="/login" />;
+  if (user?.type !== "user") return <Navigate to="/admin/dashboard" />;
+  if (user?.isActive === false) return <Navigate to="/login" />;
 
-  return user?.type === 'user' ? <Outlet /> : <Navigate to={'/'} />
-}
-
-export default UserPrivateRoutes
+  return <Outlet />;
+};
+export default UserPrivateRoutes;

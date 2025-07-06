@@ -11,6 +11,7 @@ import {
   where,
   getDocs,
   deleteDoc,
+  updateDoc
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -41,4 +42,5 @@ export {
   onAuthStateChanged,
   signOut,
   deleteDoc,
+  updateDoc
 };

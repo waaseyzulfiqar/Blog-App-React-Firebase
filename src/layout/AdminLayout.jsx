@@ -16,9 +16,15 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, signOut } from "../config/firebase";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ArticleIcon from "@mui/icons-material/Article";
+import PeopleIcon from "@mui/icons-material/People";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 function AdminLayout(props) {
   const { window, children } = props;
@@ -40,25 +46,60 @@ function AdminLayout(props) {
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem("Current_User");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout Error:", error.message);
+    }
+  };
+
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
+      <Toolbar sx={{ bgcolor: " #1976D2", color: "white" }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { sm: "none" } }}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Toolbar>{" "}
       <List>
         {[
-          { name: "Dashboard", url: "/admin/dashboard" },
-          { name: "Blogs", url: "/admin/blogs" },
-          { name: "Users", url: "/admin/users" },
+          {
+            name: "Dashboard",
+            url: "/admin/dashboard",
+            icon: <DashboardIcon />,
+          },
+          { name: "Blogs", url: "/admin/blogs", icon: <ArticleIcon /> },
+          { name: "Users", url: "/admin/users", icon: <PeopleIcon /> },
+          { name: "Logout", url: "/login", icon: <LogoutIcon /> },
         ].map((obj, index) => (
           <ListItem key={obj.name} disablePadding>
-            <Link to={obj.url}>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={obj.name} />
+            {obj.name === "Logout" ? (
+              <ListItemButton onClick={handleLogout}>
+                <ListItemIcon>{obj.icon}</ListItemIcon>
+                <ListItemText
+                  primary={obj.name}
+                  sx={{ color: "rgb(104, 81, 255)" }}
+                />
               </ListItemButton>
-            </Link>
+            ) : (
+              <ListItemButton component={Link} to={obj.url}>
+                <ListItemIcon>{obj.icon}</ListItemIcon>
+                <ListItemText
+                  primary={obj.name}
+                  sx={{ color: "rgb(104, 81, 255)", textDecoration: "none" }}
+                />
+              </ListItemButton>
+            )}
           </ListItem>
         ))}
       </List>

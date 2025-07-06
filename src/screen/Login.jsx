@@ -30,54 +30,38 @@ const Login = () => {
     try {
       setIsLoading(true);
       const data = await signInWithEmailAndPassword(auth, email, password);
-
       const uid = data.user.uid;
-
       const docSnap = await getDoc(doc(db, "Users", uid));
 
       if (docSnap.exists()) {
         const userInfo = { ...docSnap.data(), uid };
+
+        // Check if the account is inactive
+        if (userInfo.isActive === false) {
+          setIsLoading(false);
+          toast.error("Your account is inactive. Please contact admin.");
+          return;
+        }
 
         localStorage.setItem("Current_User", JSON.stringify(userInfo));
         setEmail("");
         setPassword("");
 
         if (userInfo.type === "admin") {
-          navigate("/admin/dashboard"); // Redirect to admin dashboard
+          navigate("/admin/dashboard");
         } else {
-          navigate("/"); // Redirect to user homepage
+          navigate("/");
         }
+
+        toast.success("Logged in successfully!");
       }
 
       setIsLoading(false);
-
-      toast.success("LoggedIn Successfully!", {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
     } catch (error) {
-      console.warn("Signup Error -->", error.message);
       setEmail("");
       setPassword("");
       setIsLoading(false);
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error(error.message);
     }
   };
 

@@ -1,21 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 import AdminLayout from "../layout/AdminLayout";
-import { useEffect, useState } from "react";
 
 const AdminPrivateRoutes = () => {
-  const [user, setUser] = useState(null);
+  const user = JSON.parse(localStorage.getItem("Current_User"));
 
-  useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("Current_User") || "null");
-    setUser(currentUser);
-  }, []);
+  if (!user?.uid) return <Navigate to="/login" />;
+  if (user?.type !== "admin") return <Navigate to="/" />;
+  if (user?.isActive === false) return <Navigate to="/login" />;
 
-  return user?.type === "admin" ? (
+  return (
     <AdminLayout>
       <Outlet />
     </AdminLayout>
-  ) : (
-    <Navigate to="/login" />
   );
 };
 
