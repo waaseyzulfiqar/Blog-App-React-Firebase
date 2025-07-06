@@ -100,64 +100,66 @@ export default function AllUsers() {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>First Name</StyledTableCell>
-            <StyledTableCell>Last Name</StyledTableCell>
-            <StyledTableCell>Email</StyledTableCell>
-            <StyledTableCell>Id</StyledTableCell>
-            <StyledTableCell>isActive</StyledTableCell>
-            <StyledTableCell>Action</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        {isLoading ? (
-          <TableRow>
-            <TableCell colSpan={6} align="center">
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "150px", // You can adjust height
-                }}
-              >
-                <CircularProgress size="30px" />
-              </Box>
-            </TableCell>
-          </TableRow>
-        ) : (
-          <TableBody>
-            {allUsers.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={6} align="center">
-                  No users found
-                </TableCell>
-              </TableRow>
-            ) : (
-              allUsers.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.first_name}
-                  </StyledTableCell>
-                  <StyledTableCell>{row.last_name}</StyledTableCell>
-                  <StyledTableCell>{row.email}</StyledTableCell>
-                  <StyledTableCell>{row.id}</StyledTableCell>
-                  <StyledTableCell>{String(row.isActive)}</StyledTableCell>
-                  <StyledTableCell>
-                    <Switch
-                      id={row.id}
-                      defaultChecked={row.isActive}
-                      onChange={handleIsActive}
-                    />
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))
-            )}
-          </TableBody>
-        )}
-      </Table>
-    </TableContainer>
+    <Box sx={{ overflowX: "auto" }}>
+      <TableContainer component={Paper} sx={{minWidth: 650}}>
+        <Table sx={{ minWidth: 650 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>First Name</StyledTableCell>
+              <StyledTableCell>Last Name</StyledTableCell>
+              <StyledTableCell>Email</StyledTableCell>
+              <StyledTableCell>Id</StyledTableCell>
+              <StyledTableCell>isActive</StyledTableCell>
+              <StyledTableCell>Action</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          {isLoading ? (
+            <TableRow>
+              <TableCell colSpan={6} align="center">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "150px", // You can adjust height
+                  }}
+                >
+                  <CircularProgress size="30px" />
+                </Box>
+              </TableCell>
+            </TableRow>
+          ) : (
+            <TableBody>
+              {allUsers.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    No users found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                allUsers.map((row) => (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.first_name}
+                    </StyledTableCell>
+                    <StyledTableCell>{row.last_name}</StyledTableCell>
+                    <StyledTableCell>{row.email}</StyledTableCell>
+                    <StyledTableCell>{row.id}</StyledTableCell>
+                    <StyledTableCell>{String(row.isActive)}</StyledTableCell>
+                    <StyledTableCell>
+                      <Switch
+                        id={row.id}
+                        defaultChecked={row.isActive}
+                        onChange={handleIsActive}
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))
+              )}
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

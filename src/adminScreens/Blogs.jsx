@@ -28,8 +28,40 @@ const Blogs = () => {
       setAllBlogs(tempArr);
       setIsLoading(false);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       console.warn("Admin All Blogs Fetching Error -->", error.message);
+      setIsLoading(false);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
+  const deleteBlog = async (blogId) => {
+    try {
+      await deleteDoc(doc(db, "Blogs", blogId));
+      getAllBlogs();
+      toast.success("Blog Deleted Successfully!", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (error) {
+      console.warn("Blog Deleting Error -->", error.message);
       setIsLoading(false);
       toast.error(error.message, {
         position: "top-right",
@@ -79,9 +111,9 @@ const Blogs = () => {
                   sm: "48%",
                   md: "30%",
                 },
-                minHeight:{
+                minHeight: {
                   sm: 120,
-                  md: 200
+                  md: 200,
                 },
                 display: "flex",
                 flexDirection: "column",
@@ -131,11 +163,12 @@ const Blogs = () => {
                   width={"100%"}
                 >
                   <Button
-                    onClick={() => hanldeRedirectToSingleBlogPage(blog.id)}
+                    variant="outlined"
+                    color="error"
                     size="small"
-                    sx={{ color: "rgb(104, 81, 255)", fontSize: "0.8rem" }}
+                    onClick={() => deleteBlog(blog.id)}
                   >
-                    Learn More
+                    <DeleteOutlineOutlined />
                   </Button>
                   <Typography
                     display={"inline-block"}
