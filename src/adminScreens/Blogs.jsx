@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, db, getDocs } from "../config/firebase";
+import { collection, db, deleteDoc, doc, getDocs } from "../config/firebase";
 import {
   Box,
   Button,
@@ -24,7 +24,7 @@ const Blogs = () => {
       setIsLoading(true);
       const querySnapshot = await getDocs(collection(db, "Blogs"));
       querySnapshot.forEach((doc) => {
-        tempArr.push(doc.data());
+        tempArr.push({id: doc.id, ...doc.data()});
       });
       setAllBlogs(tempArr);
       setIsLoading(false);
@@ -103,9 +103,9 @@ const Blogs = () => {
         </Box>
       ) : allBlogs.length > 0 ? (
         <>
-          {allBlogs.map((blog, index) => (
+          {allBlogs.map((blog) => (
             <Card
-              key={index}
+              key={blog.id}
               sx={{
                 width: {
                   xs: "95%",

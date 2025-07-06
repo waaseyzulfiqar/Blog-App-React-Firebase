@@ -22,9 +22,9 @@ function AdminDashboard() {
       const querySnapshot = await getDocs(collection(db, "Blogs"));
       querySnapshot.forEach((doc) => {
         if (doc.data().isPublic) {
-          privateBlogs.push(doc.data());
-        } else {
           publicBlogs.push(doc.data());
+        } else {
+          privateBlogs.push(doc.data());
         }
       });
       setAllPrivateBlogs(privateBlogs.length);

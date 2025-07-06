@@ -102,7 +102,7 @@ export default function AllUsers() {
   return (
     <Box sx={{ width: "100%", overflowX: "auto" }}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="customized table">
+        <Table aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>First Name</StyledTableCell>
